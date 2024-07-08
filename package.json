@@ -1,0 +1,14 @@
+{
+  "name": "aws-vanity-project",
+  "version": "1.0.0",
+  "description": "Amazon Connect Contact Flow with Lambda and DynamoDB Integration\r Overview",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.7.2"
+  }
+}
