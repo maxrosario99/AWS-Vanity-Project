@@ -3,6 +3,8 @@ Project Overview
 
 This project involves creating an AWS Lambda function that converts phone numbers into vanity numbers and saves the top 5 resulting vanity numbers along with the caller's number in a DynamoDB table. Additionally, an Amazon Connect contact flow will utilize this Lambda function to provide the caller with the top 3 vanity number possibilities.
 
+Amazon Connect Number: +1 855 577 6910
+
 Solution Explanation:
 
 Implementation Details
