@@ -1,52 +1,36 @@
-Amazon Connect Contact Flow with Lambda and DynamoDB Integration
-Overview
+Vanity Number Converter Lambda Project
+Project Overview
 
-This project integrates Amazon Connect with AWS Lambda and DynamoDB to create a dynamic contact flow that reads vanity phone numbers from a DynamoDB table. The solution leverages AWS Lambda to query DynamoDB and pass the data back to Amazon Connect, where it is used in a contact flow to enhance the customer interaction experience.
-Project Description
+This project involves creating an AWS Lambda function that converts phone numbers into vanity numbers and saves the top 5 resulting vanity numbers along with the caller's number in a DynamoDB table. Additionally, an Amazon Connect contact flow will utilize this Lambda function to provide the caller with the top 3 vanity number possibilities.
 
-The core functionality of this project revolves around Amazon Connect's ability to handle incoming calls and provide a tailored experience by reading vanity numbers associated with the caller's phone number, which are stored in DynamoDB. A Lambda function is triggered within the contact flow to fetch these vanity numbers dynamically based on the caller's input or automatically derived data.
-Components
-
-    Amazon Connect: Manages the contact flow, invoking AWS Lambda and playing responses based on the data received.
-    AWS Lambda: Interacts with DynamoDB to retrieve data and passes it back to Amazon Connect.
-    DynamoDB: Stores vanity numbers associated with phone numbers which are fetched during the contact flow.
+Solution Explanation:
 
 Implementation Details
-Lambda Function
 
-The Lambda function is designed to query a specific DynamoDB table for a phone number received from Amazon Connect. It retrieves the corresponding vanity numbers if they exist. The response from Lambda is a structured JSON that Amazon Connect can parse and use in its flow.
-Contact Flow
+    Phone Number Conversion: The Lambda function converts the last 4 digits of a phone number into possible vanity combinations using a predefined mapping of digits to letters.
+    Vanity Number Validation: Each generated combination is checked against a dictionary API to determine if it is a valid word.
+    Ranking and Selection: Valid combinations are prioritized and moved to the front of the list. The top 5 combinations are selected.
+    Data Storage: The original phone number and the top 5 vanity numbers are stored in a DynamoDB table.
+    Amazon Connect Integration: An Amazon Connect contact flow retrieves the top 3 vanity numbers from the Lambda function and announces them to the caller.
 
-The contact flow in Amazon Connect is set up to:
 
-    Capture the caller's phone number.
-    Invoke the Lambda function, passing the captured phone number.
-    Receive the vanity numbers from Lambda and use them in subsequent steps to play back to the caller.
-
-Integration
-
-The integration is achieved through setting up the AWS Lambda function as a resource within Amazon Connect, allowing direct invocation of the function from the contact flow.
 Challenges and Solutions
-Data Formatting
 
-Problem: Initial challenges were met when ensuring the data format returned by Lambda was compatible with Amazon Connect's parsing mechanisms.
+Performance Optimization: To avoid timeouts and long execution times, I limited the vanity number conversion to the last 4 digits of the phone number. This significantly reduced the number of combinations to check.
+Valid Word Checking: Using the dictionary API to check each combination ensured that only meaningful vanity numbers were considered.
+Prioritization of Results: By moving valid vanity numbers to the front of the list, I ensured that the most meaningful combinations were prioritized.
 
-Solution: Adjusted the Lambda function to return a correctly structured JSON object that Amazon Connect could easily parse.
-Contact Flow Configuration
+Shortcuts and Production Considerations
 
-Problem: The contact flow initially skipped reading the returned vanity numbers due to incorrect variable referencing.
+Limiting to Last 4 Digits: This was done for efficiency, but in a production environment, a more robust solution would consider the entire phone number.
+Basic Validation and Ranking: The current solution uses a straightforward validation method. In a production setting, additional criteria and more complex ranking algorithms should be implemented.
 
-Solution: Debugged the flow by implementing log statements and corrected the variable references to properly map the external data fields.
-Error Handling
-
-Problem: Handling errors such as no data found for a phone number or issues in accessing DynamoDB.
-
-Solution: Enhanced the Lambda function to include comprehensive error handling that provides meaningful error messages back to Amazon Connect, which then gracefully informs the caller about the issue.
-Conclusion
-
-This project illustrates the powerful integration capabilities of AWS services to create a dynamic and responsive customer service experience using Amazon Connect, AWS Lambda, and DynamoDB. It tackles practical issues such as dynamic data retrieval and real-time decision making within a contact flow.
 Future Enhancements
 
-    Caching Mechanisms: Implement caching to reduce DynamoDB read operations, thus saving costs and decreasing latency.
-    Expanded Data Set: Include additional data points in DynamoDB for richer interactions.
-    Advanced Error Handling: Develop more sophisticated error responses based on the type of error encountered.
+Given more time, I would like to:
+
+Enhance Number Conversion: Implement a function to handle phone numbers in multiple formats and convert the entire number to vanity combinations.
+Improve Validation and Ranking: Add more criteria for checking combinations and develop a more sophisticated ranking system.
+Interactive Speech Bot: Develop a speech bot that allows users to interact with the system, such as entering different phone numbers for conversion.
+
+
