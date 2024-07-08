@@ -16,14 +16,14 @@ Implementation Details
 
 Challenges and Solutions
 
-Performance Optimization: To avoid timeouts and long execution times, I limited the vanity number conversion to the last 4 digits of the phone number. This significantly reduced the number of combinations to check.
-Valid Word Checking: Using the dictionary API to check each combination ensured that only meaningful vanity numbers were considered.
-Prioritization of Results: By moving valid vanity numbers to the front of the list, I ensured that the most meaningful combinations were prioritized.
+- Performance Optimization: To avoid timeouts and long execution times, I limited the vanity number conversion to the last 4 digits of the phone number. This significantly reduced the number of combinations to check.
+- Valid Word Checking: Using the dictionary API to check each combination ensured that only meaningful vanity numbers were considered.
+- Prioritization of Results: By moving valid vanity numbers to the front of the list, I ensured that the most meaningful combinations were prioritized.
 
 Shortcuts and Production Considerations
 
-Limiting to Last 4 Digits: This was done for efficiency, but in a production environment, a more robust solution would consider the entire phone number.
-Basic Validation and Ranking: The current solution uses a straightforward validation method. In a production setting, additional criteria and more complex ranking algorithms should be implemented.
+- Limiting to Last 4 Digits: This was done for efficiency, but in a production environment, a more robust solution would consider the entire phone number.
+- Basic Validation and Ranking: The current solution uses a straightforward validation method. In a production setting, additional criteria and more complex ranking algorithms should be implemented.
 
 Future Enhancements
 
